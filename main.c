@@ -23,12 +23,12 @@
 /* Dice LED bit patterns - fill these in from the dice table
  * in the lab handout. Index 0 = face "1", index 5 = face "6". */
 static const uint8_t dicePatterns[6] = {
-    0x00, // TODO: pattern for 1
-    0x00, // TODO: pattern for 2
-    0x00, // TODO: pattern for 3
-    0x00, // TODO: pattern for 4
-    0x00, // TODO: pattern for 5
-    0x00  // TODO: pattern for 6
+    0x08,  // RC3 
+    0x41, // RC0
+    0x49,  // RC2
+    0x63,  // Rc1
+    0x6B, // RC4
+    0x77  // RC6
 };
 
 static void init_clock_to_64MHz(void) {
@@ -95,6 +95,8 @@ void main(void) {
     init_timer0_free_running();
 
     while (1) {
+        
+        if(read_button_pressed()){
         // TODO: When a (debounced) press is detected:
         //   1. Read TMR0H:TMR0L and use it to seed rand() with srand()
         uint8_t low = TMR0L;
@@ -118,5 +120,9 @@ void main(void) {
         LATD = 0x00;
         //   5. Wait for the button to be released (one roll per press)
         wait_for_release();
+            
+            
+        }
+
     }
 }
